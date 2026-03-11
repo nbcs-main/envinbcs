@@ -3784,3 +3784,23 @@ input, select, textarea {
 			}
 
 		}
+
+
+/* Custom icon image replacement */
+.custom-icon::before {
+	content: none !important;
+}
+
+.custom-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.custom-icon img {
+	width: 3.5rem;
+	height: 3.5rem;
+	object-fit: contain;
+	display: block;
+}
+
