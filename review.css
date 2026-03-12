@@ -89,9 +89,9 @@
 .rating-label {
 	display: block;
 	margin: 0 0 0.85rem 0;
-	font-family: inherit;
+	font-family: "Source Sans Pro", Helvetica, sans-serif;
 	font-size: 1rem;
-	font-weight: 400;
+	font-weight: 300;
 	letter-spacing: 0;
 	text-transform: none;
 	color: inherit;
@@ -109,7 +109,7 @@
 	margin: 0 !important;
 	min-width: 0;
 	flex: 0 0 auto;
-	font-family: inherit !important;
+	font-family: "Source Sans Pro", Helvetica, sans-serif !important;
 	font-size: 0.8rem !important;
 	font-weight: 400 !important;
 	letter-spacing: 0.2em !important;
@@ -124,6 +124,8 @@
 
 .rating-helper {
 	margin-top: 0.85rem;
+	font-family: "Source Sans Pro", Helvetica, sans-serif;
+	font-weight: 300;
 }
 
 @media screen and (max-width: 736px) {
