@@ -86,54 +86,44 @@
 	color: #2471a3;
 }
 
-.star-rating-wrap {
-	display: flex;
-	flex-direction: column;
-	gap: 0.4rem;
-}
-
-.star-rating-label {
+.rating-label {
 	display: block;
-	font-weight: 600;
-	margin-bottom: 0.15rem;
+	margin: 0 0 0.85rem 0;
+	font-family: inherit;
+	font-size: 1rem;
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: none;
+	color: inherit;
 }
 
-.star-rating {
+.rating-pill-group {
 	display: flex;
-	align-items: center;
-	gap: 0.2rem;
-	min-height: 2.5rem;
+	flex-wrap: wrap;
+	gap: 0.65rem;
+	width: 100%;
+	max-width: 100%;
 }
 
-.star-btn {
-	appearance: none;
-	background: transparent !important;
-	border: 0 !important;
-	box-shadow: none !important;
-	padding: 0;
-	margin: 0;
-	font-size: 2rem;
-	line-height: 1;
-	cursor: pointer;
-	color: #d0d0d0;
-	transition: transform 0.15s ease, color 0.15s ease;
+.rating-pill {
+	margin: 0 !important;
+	min-width: 0;
+	flex: 0 0 auto;
+	font-family: inherit !important;
+	font-size: 0.8rem !important;
+	font-weight: 400 !important;
+	letter-spacing: 0.2em !important;
+	text-transform: uppercase !important;
+	white-space: nowrap;
 }
 
-.star-btn:hover,
-.star-btn:focus {
-	color: #f4b400;
-	transform: scale(1.08);
-	outline: none;
+.rating-pill.primary,
+.rating-pill[aria-pressed="true"] {
+	box-shadow: none;
 }
 
-.star-btn.is-active {
-	color: #f4b400;
-}
-
-.star-rating-text {
-	margin: 0;
-	font-size: 0.95rem;
-	opacity: 0.8;
+.rating-helper {
+	margin-top: 0.85rem;
 }
 
 @media screen and (max-width: 736px) {
@@ -146,38 +136,12 @@
 		align-items: flex-start;
 	}
 
-	.star-btn {
-		font-size: 1.8rem;
-	}
-}
-
-.rating-label {
-	display: block;
-	margin-bottom: 0.75rem;
-}
-
-.rating-pill-group {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5rem;
-	width: 100%;
-	max-width: 100%;
-}
-
-.rating-pill {
-	margin: 0 !important;
-	white-space: nowrap;
-	flex: 0 1 auto;
-	min-width: 0;
-}
-
-@media screen and (max-width: 736px) {
 	.rating-pill-group {
-		gap: 0.4rem;
+		gap: 0.5rem;
 	}
 
 	.rating-pill {
-		flex: 1 1 calc(50% - 0.4rem);
+		flex: 1 1 calc(50% - 0.5rem);
 		text-align: center;
 	}
 }
