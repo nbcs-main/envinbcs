@@ -63,18 +63,16 @@
 							</div>
 
 							<div class="col-6 col-12-xsmall">
-								<div class="star-rating-wrap">
-									<label class="star-rating-label" for="rating">Rating</label>
-									<div class="star-rating" id="star-rating" role="radiogroup" aria-label="Rating">
-										<button type="button" class="star-btn" data-value="1" aria-label="1 star">★</button>
-										<button type="button" class="star-btn" data-value="2" aria-label="2 stars">★</button>
-										<button type="button" class="star-btn" data-value="3" aria-label="3 stars">★</button>
-										<button type="button" class="star-btn" data-value="4" aria-label="4 stars">★</button>
-										<button type="button" class="star-btn" data-value="5" aria-label="5 stars">★</button>
-									</div>
-									<input type="hidden" name="rating" id="rating" required />
-									<p id="star-rating-text" class="star-rating-text">Select a rating</p>
-								</div>
+								<label for="rating" style="display:block; margin-bottom: 0.75rem;">Rating</label>
+								<ul class="actions fit small" id="rating-pills">
+									<li><button type="button" class="button small rating-pill" data-value="1" aria-pressed="false">Poor</button></li>
+									<li><button type="button" class="button small rating-pill" data-value="2" aria-pressed="false">Fair</button></li>
+									<li><button type="button" class="button small rating-pill" data-value="3" aria-pressed="false">Good</button></li>
+									<li><button type="button" class="button small rating-pill" data-value="4" aria-pressed="false">Very Good</button></li>
+									<li><button type="button" class="button small rating-pill" data-value="5" aria-pressed="false">Excellent</button></li>
+								</ul>
+								<input type="hidden" name="rating" id="rating" required />
+								<p id="rating-helper" class="review-note">Select a rating.</p>
 							</div>
 
 							<div class="col-12">
@@ -170,9 +168,8 @@
 			const submitButton = reviewForm.querySelector('input[type="submit"]');
 
 			const ratingInput = document.getElementById('rating');
-			const starButtons = document.querySelectorAll('.star-btn');
-			const starRatingText = document.getElementById('star-rating-text');
-			const starRating = document.getElementById('star-rating');
+			const ratingPills = document.querySelectorAll('.rating-pill');
+			const ratingHelper = document.getElementById('rating-helper');
 
 			function setStatus(message, type = '') {
 				reviewStatus.textContent = message;
@@ -239,47 +236,34 @@
 				return article;
 			}
 
-			function updateStarUI(value) {
+			function updateRatingUI(value) {
 				const rating = Number(value);
 
-				starButtons.forEach(function(button) {
+				const labels = {
+					1: 'Selected: Poor',
+					2: 'Selected: Fair',
+					3: 'Selected: Good',
+					4: 'Selected: Very Good',
+					5: 'Selected: Excellent'
+				};
+
+				ratingPills.forEach(function(button) {
 					const buttonValue = Number(button.dataset.value);
-					const isActive = buttonValue <= rating;
 					const isSelected = buttonValue === rating;
 
-					button.classList.toggle('is-active', isActive);
-					button.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+					button.classList.toggle('primary', isSelected);
+					button.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
 				});
 
-				if (rating >= 1 && rating <= 5) {
-					const labels = {
-						1: '1 - Poor',
-						2: '2 - Fair',
-						3: '3 - Good',
-						4: '4 - Very Good',
-						5: '5 - Excellent'
-					};
-
-					starRatingText.textContent = labels[rating];
-				} else {
-					starRatingText.textContent = 'Select a rating';
-				}
+				ratingHelper.textContent = labels[rating] || 'Select a rating.';
 			}
 
-			starButtons.forEach(function(button) {
+			ratingPills.forEach(function(button) {
 				button.addEventListener('click', function() {
 					const value = button.dataset.value;
 					ratingInput.value = value;
-					updateStarUI(value);
+					updateRatingUI(value);
 				});
-
-				button.addEventListener('mouseenter', function() {
-					updateStarUI(button.dataset.value);
-				});
-			});
-
-			starRating.addEventListener('mouseleave', function() {
-				updateStarUI(ratingInput.value);
 			});
 
 			function getFriendlyError(error) {
@@ -373,7 +357,7 @@
 
 					reviewForm.reset();
 					ratingInput.value = '';
-					updateStarUI('');
+					updateRatingUI('');
 					setStatus('Thanks. Your review has been submitted for approval.', 'is-success');
 				} catch (error) {
 					console.error('submit error:', error);
@@ -394,7 +378,7 @@
 				setStatus('You are offline. Reviews cannot be submitted right now.', 'is-error');
 			});
 
-			updateStarUI('');
+			updateRatingUI('');
 			loadReviews();
 		</script>
 
