@@ -63,14 +63,14 @@
 							</div>
 
 							<div class="col-6 col-12-xsmall">
-								<label for="rating" style="display:block; margin-bottom: 0.75rem;">Rating</label>
-								<ul class="actions fit small" id="rating-pills">
-									<li><button type="button" class="button small rating-pill" data-value="1" aria-pressed="false">Poor</button></li>
-									<li><button type="button" class="button small rating-pill" data-value="2" aria-pressed="false">Fair</button></li>
-									<li><button type="button" class="button small rating-pill" data-value="3" aria-pressed="false">Good</button></li>
-									<li><button type="button" class="button small rating-pill" data-value="4" aria-pressed="false">Very Good</button></li>
-									<li><button type="button" class="button small rating-pill" data-value="5" aria-pressed="false">Excellent</button></li>
-								</ul>
+								<label for="rating" class="rating-label">Rating</label>
+								<div class="rating-pill-group" id="rating-pills">
+									<button type="button" class="button small rating-pill" data-value="1" aria-pressed="false">Poor</button>
+									<button type="button" class="button small rating-pill" data-value="2" aria-pressed="false">Fair</button>
+									<button type="button" class="button small rating-pill" data-value="3" aria-pressed="false">Good</button>
+									<button type="button" class="button small rating-pill" data-value="4" aria-pressed="false">Very Good</button>
+									<button type="button" class="button small rating-pill" data-value="5" aria-pressed="false">Excellent</button>
+								</div>
 								<input type="hidden" name="rating" id="rating" required />
 								<p id="rating-helper" class="review-note">Select a rating.</p>
 							</div>
