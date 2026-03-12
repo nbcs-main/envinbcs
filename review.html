@@ -15,16 +15,13 @@
 	</head>
 	<body class="is-preload">
 
-		<!-- Wrapper -->
 		<div id="wrapper">
 
-			<!-- Header -->
 			<header id="header">
 				<h1>Client Reviews</h1>
 				<p>Read what clients have shared and leave your own feedback.</p>
 			</header>
 
-			<!-- Nav -->
 			<nav id="nav">
 				<ul>
 					<li><a href="index">Overview</a></li>
@@ -33,10 +30,8 @@
 				</ul>
 			</nav>
 
-			<!-- Main -->
 			<div id="main">
 
-				<!-- Published Reviews -->
 				<section id="published-reviews" class="main">
 					<header class="major">
 						<h2>What people are saying</h2>
@@ -48,7 +43,6 @@
 					</div>
 				</section>
 
-				<!-- Leave Review -->
 				<section id="leave-review" class="main">
 					<header class="major">
 						<h2>Leave a Review</h2>
@@ -69,14 +63,18 @@
 							</div>
 
 							<div class="col-6 col-12-xsmall">
-								<select name="rating" id="rating" required>
-									<option value="">Rating</option>
-									<option value="5">5 - Excellent</option>
-									<option value="4">4 - Very Good</option>
-									<option value="3">3 - Good</option>
-									<option value="2">2 - Fair</option>
-									<option value="1">1 - Poor</option>
-								</select>
+								<div class="star-rating-wrap">
+									<label class="star-rating-label" for="rating">Rating</label>
+									<div class="star-rating" id="star-rating" role="radiogroup" aria-label="Rating">
+										<button type="button" class="star-btn" data-value="1" aria-label="1 star">★</button>
+										<button type="button" class="star-btn" data-value="2" aria-label="2 stars">★</button>
+										<button type="button" class="star-btn" data-value="3" aria-label="3 stars">★</button>
+										<button type="button" class="star-btn" data-value="4" aria-label="4 stars">★</button>
+										<button type="button" class="star-btn" data-value="5" aria-label="5 stars">★</button>
+									</div>
+									<input type="hidden" name="rating" id="rating" required />
+									<p id="star-rating-text" class="star-rating-text">Select a rating</p>
+								</div>
 							</div>
 
 							<div class="col-12">
@@ -103,7 +101,6 @@
 
 			</div>
 
-			<!-- Footer -->
 			<footer id="footer">
 				<section>
 					<h2>Aliquam sed mauris</h2>
@@ -135,7 +132,6 @@
 
 		</div>
 
-		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/jquery.scrollex.min.js"></script>
 		<script src="assets/js/jquery.scrolly.min.js"></script>
@@ -171,8 +167,14 @@
 			const reviewList = document.getElementById('review-list');
 			const reviewForm = document.getElementById('review-form');
 			const reviewStatus = document.getElementById('review-status');
+			const submitButton = reviewForm.querySelector('input[type="submit"]');
 
-			function setStatus(message, type) {
+			const ratingInput = document.getElementById('rating');
+			const starButtons = document.querySelectorAll('.star-btn');
+			const starRatingText = document.getElementById('star-rating-text');
+			const starRating = document.getElementById('star-rating');
+
+			function setStatus(message, type = '') {
 				reviewStatus.textContent = message;
 				reviewStatus.className = 'review-status';
 
@@ -237,6 +239,69 @@
 				return article;
 			}
 
+			function updateStarUI(value) {
+				const rating = Number(value);
+
+				starButtons.forEach(function(button) {
+					const buttonValue = Number(button.dataset.value);
+					const isActive = buttonValue <= rating;
+					const isSelected = buttonValue === rating;
+
+					button.classList.toggle('is-active', isActive);
+					button.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+				});
+
+				if (rating >= 1 && rating <= 5) {
+					const labels = {
+						1: '1 - Poor',
+						2: '2 - Fair',
+						3: '3 - Good',
+						4: '4 - Very Good',
+						5: '5 - Excellent'
+					};
+
+					starRatingText.textContent = labels[rating];
+				} else {
+					starRatingText.textContent = 'Select a rating';
+				}
+			}
+
+			starButtons.forEach(function(button) {
+				button.addEventListener('click', function() {
+					const value = button.dataset.value;
+					ratingInput.value = value;
+					updateStarUI(value);
+				});
+
+				button.addEventListener('mouseenter', function() {
+					updateStarUI(button.dataset.value);
+				});
+			});
+
+			starRating.addEventListener('mouseleave', function() {
+				updateStarUI(ratingInput.value);
+			});
+
+			function getFriendlyError(error) {
+				const code = error && error.code ? error.code : '';
+
+				switch (code) {
+					case 'permission-denied':
+						return 'Submission failed: database permission denied.';
+					case 'unavailable':
+						return 'Submission failed: service is temporarily unavailable.';
+					case 'failed-precondition':
+						return 'Submission failed: database is not fully configured yet.';
+					case 'invalid-argument':
+						return 'Submission failed: some review data was invalid.';
+					default:
+						if (!navigator.onLine) {
+							return 'You appear to be offline. Please check your internet connection and try again.';
+						}
+						return 'Sorry, your review could not be submitted. Please try again.';
+				}
+			}
+
 			async function loadReviews() {
 				reviewList.innerHTML = '<div class="review-empty">Loading reviews...</div>';
 
@@ -246,8 +311,10 @@
 					const snapshot = await getDocs(approvedQuery);
 
 					const reviews = snapshot.docs
-						.map((doc) => ({ id: doc.id, ...doc.data() }))
-						.sort((a, b) => {
+						.map(function(doc) {
+							return { id: doc.id, ...doc.data() };
+						})
+						.sort(function(a, b) {
 							const aMs = a.createdAt && typeof a.createdAt.toMillis === 'function'
 								? a.createdAt.toMillis()
 								: 0;
@@ -268,7 +335,7 @@
 						reviewList.appendChild(createReviewCard(review));
 					});
 				} catch (error) {
-					console.error(error);
+					console.error('loadReviews error:', error);
 					reviewList.innerHTML = '<div class="review-empty">Could not load reviews right now.</div>';
 				}
 			}
@@ -277,24 +344,23 @@
 				event.preventDefault();
 				setStatus('');
 
-				const submitButton = reviewForm.querySelector('input[type="submit"]');
 				const name = document.getElementById('name').value.trim();
-				const rating = parseInt(document.getElementById('rating').value, 10);
+				const rating = parseInt(ratingInput.value, 10);
 				const comment = document.getElementById('comment').value.trim();
-				const website = document.getElementById('website').value.trim();
 
-				if (website) {
-					setStatus('Submission blocked.', 'is-error');
+				if (!navigator.onLine) {
+					setStatus('You appear to be offline. Please check your internet connection.', 'is-error');
 					return;
 				}
 
 				if (!name || !rating || !comment) {
-					setStatus('Please complete all fields.', 'is-error');
+					setStatus('Please complete all fields, including the rating.', 'is-error');
 					return;
 				}
 
 				submitButton.disabled = true;
 				submitButton.value = 'Submitting...';
+				setStatus('Submitting your review...', 'is-loading');
 
 				try {
 					await addDoc(collection(db, 'reviews'), {
@@ -306,16 +372,29 @@
 					});
 
 					reviewForm.reset();
+					ratingInput.value = '';
+					updateStarUI('');
 					setStatus('Thanks. Your review has been submitted for approval.', 'is-success');
 				} catch (error) {
-					console.error(error);
-					setStatus('Sorry, your review could not be submitted.', 'is-error');
+					console.error('submit error:', error);
+					setStatus(getFriendlyError(error), 'is-error');
 				} finally {
 					submitButton.disabled = false;
 					submitButton.value = 'Submit Review';
 				}
 			});
 
+			window.addEventListener('online', function() {
+				if (reviewStatus.classList.contains('is-error')) {
+					setStatus('Connection restored.', 'is-success');
+				}
+			});
+
+			window.addEventListener('offline', function() {
+				setStatus('You are offline. Reviews cannot be submitted right now.', 'is-error');
+			});
+
+			updateStarUI('');
 			loadReviews();
 		</script>
 
