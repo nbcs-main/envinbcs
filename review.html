@@ -48,10 +48,10 @@
 						<h2>Leave a Review</h2>
 						<p>Your review will be reviewed before it is published.</p>
 					</header>
-
+				
 					<form id="review-form">
 						<div class="row gtr-uniform">
-							<div class="col-6 col-12-xsmall">
+							<div class="col-12">
 								<input
 									type="text"
 									name="name"
@@ -61,20 +61,7 @@
 									required
 								/>
 							</div>
-
-							<div class="col-6 col-12-xsmall">
-								<label for="rating" class="rating-label">Rating</label>
-								<div class="rating-pill-group" id="rating-pills">
-									<button type="button" class="button small rating-pill" data-value="1" aria-pressed="false">Poor</button>
-									<button type="button" class="button small rating-pill" data-value="2" aria-pressed="false">Fair</button>
-									<button type="button" class="button small rating-pill" data-value="3" aria-pressed="false">Good</button>
-									<button type="button" class="button small rating-pill" data-value="4" aria-pressed="false">Very Good</button>
-									<button type="button" class="button small rating-pill" data-value="5" aria-pressed="false">Excellent</button>
-								</div>
-								<input type="hidden" name="rating" id="rating" required />
-								<p id="rating-helper" class="review-note">Select a rating.</p>
-							</div>
-
+				
 							<div class="col-12">
 								<textarea
 									name="comment"
@@ -85,7 +72,20 @@
 									required
 								></textarea>
 							</div>
-
+				
+							<div class="col-12">
+								<label for="rating" class="rating-label">Rating</label>
+								<div class="rating-pill-group" id="rating-pills">
+									<button type="button" class="button small rating-pill" data-value="1" aria-pressed="false">Poor</button>
+									<button type="button" class="button small rating-pill" data-value="2" aria-pressed="false">Fair</button>
+									<button type="button" class="button small rating-pill" data-value="3" aria-pressed="false">Good</button>
+									<button type="button" class="button small rating-pill" data-value="4" aria-pressed="false">Very Good</button>
+									<button type="button" class="button small rating-pill" data-value="5" aria-pressed="false">Excellent</button>
+								</div>
+								<input type="hidden" name="rating" id="rating" required />
+								<p id="rating-helper" class="review-note rating-helper">Select a rating.</p>
+							</div>
+				
 							<div class="col-12">
 								<ul class="actions">
 									<li><input type="submit" value="Submit Review" class="primary" /></li>
