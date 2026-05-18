@@ -3346,7 +3346,6 @@ input, select, textarea {
 		-webkit-transition: background-color 0.2s ease, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, padding 0.2s ease;
 		-ms-transition: background-color 0.2s ease, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, padding 0.2s ease;
 		transition: background-color 0.2s ease, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, padding 0.2s ease;
-		background-color: #ffffff;
 		color: #636363;
 		position: absolute;
 		width: 64em;
@@ -3883,7 +3882,7 @@ input, select, textarea {
 
 		}
 
-		@media screen and (max-width: 480px) {
+		@media screen and (max-width: 360px) {
 
 			#footer {
 				padding: 2.5em 1em 0.5em 1em ;
@@ -3934,7 +3933,7 @@ input, select, textarea {
 		background-position: 0 0, 0% 50%;
 	}
 	100% {
-		background-position: 300 300, 0% 50%;
+		background-position: 300px 300px, 0% 50%;
 	}
 }
 
