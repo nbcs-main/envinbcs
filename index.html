@@ -135,7 +135,9 @@
 									<h2>Stay Informed</h2>
 									<p>Sharing insights, technical guidance, and industry updates on environmental compliance, engineering solutions, and sustainable development.</p>
 								</header>
-								<div id="mv-post-container"></div>
+								<div id="most-visited">
+								    <div id="mv-post-container"></div>
+								</div>
 								
 								<footer class="major">
 									<ul class="actions special">
@@ -239,8 +241,9 @@
 					if (!post) return;
 					
 					const imageHTML = post.image
-						? `<span class="most-visited .spotlight .image"><img src="${post.image}" alt="${post.title}" /></span>`
-						: `<span class="icon solid major style5 fa-file-alt"></span>`;
+					    ? `<span class="image"><img src="${post.image}" alt="${post.title}" /></span>`
+					    : `<span class="icon solid major style5 fa-file-alt"></span>`;
+					
 
 					container.innerHTML = `
 						<div class="spotlight">
