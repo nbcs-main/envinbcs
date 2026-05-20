@@ -1,88 +1,484 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Services</title>
+		<link rel="icon" href="favicon.ico">
+		<title>Services | NBCS</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Explore NBCS environmental, engineering, water resources, wastewater, solid waste, food safety, regulatory compliance, and project support services for government and private clients in the Philippines." />
+		<meta name="robots" content="index, follow" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Services | NBCS" />
+		<meta property="og:description" content="Multi-disciplinary environmental and engineering services from N. Aguirre Business Consultancy Services." />
+		<meta property="og:image" content="images/logo.svg" />
+
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<style>
+			/* Services Page Helpers - can be moved to assets/css/main.css later */
+
+			.services-intro {
+				max-width: 860px;
+				margin: 0 auto 2.5em auto;
+				text-align: center;
+			}
+
+			.service-kicker {
+				font-size: 0.75em;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: #2B4C99;
+				margin-bottom: 0.75em;
+			}
+
+			.service-grid {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 1.5em;
+				margin: 2em 0 0 0;
+			}
+
+			.service-card {
+				border: solid 1px #dddddd;
+				border-radius: 8px;
+				background: #ffffff;
+				padding: 1.65em;
+				min-height: 100%;
+				transition: transform 0.2s ease, box-shadow 0.2s ease;
+			}
+
+			.service-card:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 0.75em 1.5em rgba(0, 0, 0, 0.08);
+			}
+
+			.service-card .icon {
+				margin-bottom: 0.75em;
+			}
+
+			.service-card h3 {
+				margin-bottom: 0.75em;
+			}
+
+			.service-card ul {
+				font-size: 0.95em;
+				margin: 0;
+				padding-left: 1.15em;
+			}
+
+			.service-card li {
+				margin-bottom: 0.35em;
+			}
+
+			.service-process {
+				display: grid;
+				grid-template-columns: repeat(4, minmax(0, 1fr));
+				gap: 1.25em;
+				margin-top: 2em;
+			}
+
+			.service-step {
+				padding: 1.4em;
+				border-radius: 8px;
+				background: rgba(222, 222, 222, 0.25);
+				text-align: center;
+			}
+
+			.service-step strong {
+				display: block;
+				font-size: 1.6em;
+				line-height: 1;
+				color: #2B4C99;
+				margin-bottom: 0.35em;
+			}
+
+			.service-note {
+				margin-top: 2.5em;
+				padding: 1.75em;
+				border-radius: 8px;
+				background: rgba(222, 222, 222, 0.25);
+			}
+
+			.service-cta {
+				margin-top: 2.5em;
+				padding: 2em;
+				border-radius: 8px;
+				background: rgba(222, 222, 222, 0.25);
+				text-align: center;
+			}
+
+			.service-list-columns {
+				columns: 2;
+				column-gap: 2.5em;
+			}
+
+			.service-list-columns li {
+				break-inside: avoid;
+				margin-bottom: 0.45em;
+			}
+
+			@media screen and (max-width: 980px) {
+				.service-grid {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
+
+				.service-process {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
+			}
+
+			@media screen and (max-width: 736px) {
+				.service-grid,
+				.service-process {
+					grid-template-columns: 1fr;
+				}
+
+				.service-list-columns {
+					columns: 1;
+				}
+			}
+		</style>
+
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-0HM8RZLQFF"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-0HM8RZLQFF');
+		</script>
+
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Service",
+			"name": "Environmental and Engineering Consultancy Services",
+			"provider": {
+				"@type": "Organization",
+				"name": "N. Aguirre Business Consultancy Services"
+			},
+			"areaServed": "Philippines",
+			"serviceType": [
+				"Environmental Assessment",
+				"Regulatory Compliance",
+				"Water Resources and Hydrogeological Services",
+				"Wastewater Engineering",
+				"Solid Waste Management",
+				"Food Safety",
+				"Public Consultation",
+				"Environmental Monitoring"
+			]
+		}
+		</script>
 	</head>
+
 	<body class="is-preload">
+		<div id="wrapper">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+			<header id="header">
+				<h1>Our Services</h1>
+				<p>Environmental, engineering, regulatory, water resource, and project support services for responsible development.</p>
+			</header>
 
-				<!-- Header -->
-					<header id="header">
-						<h1>Generic</h1>
-						<p>Ipsum dolor sit amet nullam</p>
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About Us</a></li>
+					<li><a href="services.html" class="active">Services</a></li>
+					<li><a href="generic.html">Projects</a></li>
+					<li><a href="stories/all-stories.html">Stories</a></li>
+					<li><a href="contact-form.html">Get Started</a></li>
+				</ul>
+			</nav>
+
+			<div id="main">
+
+				<section id="overview" class="main special">
+					<header class="major">
+						<h2>Multi-disciplinary support for complex project requirements</h2>
 					</header>
-				<!-- Nav -->
-					<nav id="nav">
-						<ul>
-							<li><a href="index">Overview</a></li>
-							<li><a href="#services" class="active">Services</a></li>
-							<li><a href="#projects">Projects</a></li>
-							<li><a href="#blog">Blogs</a></li>
-							<li><a href="#cta">Get Started</a></li>
-						</ul>
-					</nav>
-				<!-- Main -->
-					<div id="main">
 
-						<!-- Content -->
-							<section id="content" class="main">
-								<span class="image main"><img src="images/pic04.jpg" alt="" /></span>
-								<h2>Magna feugiat lorem</h2>
-								<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis fames ac ante ipsum primis in faucibus.</p>
-								<p>Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Consequat leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit enim turpis lorem ipsum dolor sit amet feugiat. Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet est velit quis lorem.</p>
-								<h2>Tempus veroeros</h2>
-								<p>Cep risus aliquam gravida cep ut lacus amet. Adipiscing faucibus nunc placerat. Tempus adipiscing turpis non blandit accumsan eget lacinia nunc integer interdum amet aliquam ut orci non col ut ut praesent. Semper amet interdum mi. Phasellus enim laoreet ac ac commodo faucibus faucibus. Curae ante vestibulum ante. Blandit. Ante accumsan nisi eu placerat gravida placerat adipiscing in risus fusce vitae ac mi accumsan nunc in accumsan tempor blandit aliquet aliquet lobortis. Ultricies blandit lobortis praesent turpis. Adipiscing accumsan adipiscing adipiscing ac lacinia cep. Orci blandit a iaculis adipiscing ac. Vivamus ornare laoreet odio vis praesent nunc lorem mi. Erat. Tempus sem faucibus ac id. Vis in blandit. Nascetur ultricies blandit ac. Arcu aliquam. Accumsan mi eget adipiscing nulla. Non vestibulum ac interdum condimentum semper commodo massa arcu.</p>
-							</section>
-
+					<div class="services-intro">
+						<p>
+							NBCS supports government and private clients through practical environmental and engineering services. Our work covers project planning, site assessment, permitting, monitoring, technical documentation, treatment system support, regulatory coordination, and implementation assistance.
+						</p>
 					</div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<h2>Aliquam sed mauris</h2>
-							<p>Sed lorem ipsum dolor sit amet et nullam consequat feugiat consequat magna adipiscing tempus etiam dolore veroeros. eget dapibus mauris. Cras aliquet, nisl ut viverra sollicitudin, ligula erat egestas velit, vitae tincidunt odio.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">Learn More</a></li>
-							</ul>
-						</section>
-						<section>
-							<h2>Etiam feugiat</h2>
-							<dl class="alt">
-								<dt>Address</dt>
-								<dd>1234 Somewhere Road &bull; Nashville, TN 00000 &bull; USA</dd>
-								<dt>Phone</dt>
-								<dd>(000) 000-0000 x 0000</dd>
-								<dt>Email</dt>
-								<dd><a href="#">information@untitled.tld</a></dd>
-							</dl>
-							<ul class="icons">
-								<li><a href="#" class="icon brands fa-twitter alt"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands fa-facebook-f alt"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-instagram alt"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon brands fa-github alt"><span class="label">GitHub</span></a></li>
-								<li><a href="#" class="icon brands fa-dribbble alt"><span class="label">Dribbble</span></a></li>
-							</ul>
-						</section>
-						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-					</footer>
+					<ul class="statistics">
+						<li class="style1">
+							<span class="icon solid fa-leaf"></span>
+							<strong>Environmental</strong>
+							Assessment & monitoring
+						</li>
 
+						<li class="style2">
+							<span class="icon solid fa-water"></span>
+							<strong>Water</strong>
+							Groundwater & resources
+						</li>
+
+						<li class="style3">
+							<span class="icon solid fa-industry"></span>
+							<strong>Engineering</strong>
+							Wastewater & solid waste
+						</li>
+
+						<li class="style4">
+							<span class="icon solid fa-file-alt"></span>
+							<strong>Compliance</strong>
+							Permits & reporting
+						</li>
+
+						<li class="style5">
+							<span class="icon solid fa-users"></span>
+							<strong>Community</strong>
+							IEC & consultation
+						</li>
+					</ul>
+				</section>
+
+				<section id="core-services" class="main">
+					<header class="major">
+						<h2>Core Service Areas</h2>
+					</header>
+
+					<p>
+						Our service areas are organized around the actual needs of projects: understanding the site, securing the right requirements, designing workable solutions, monitoring performance, and coordinating with stakeholders. Depending on the project, NBCS can provide focused technical support or assemble a multi-disciplinary team for broader implementation.
+					</p>
+
+					<div class="service-grid">
+						<article class="service-card">
+							<span class="icon solid major style2 fa-seedling"></span>
+							<p class="service-kicker">Natural Resources</p>
+							<h3>Resource Inventory, Planning & Conservation</h3>
+							<ul>
+								<li>Natural resources inventory and assessment</li>
+								<li>Wetland delineation, planning, mitigation, and monitoring</li>
+								<li>Habitat restoration, enhancement, and preservation</li>
+								<li>Land use planning and greenway evaluation</li>
+								<li>River profiling and protected area assessment</li>
+							</ul>
+						</article>
+
+						<article class="service-card">
+							<span class="icon solid major style3 fa-clipboard-check"></span>
+							<p class="service-kicker">Environmental Assessment</p>
+							<h3>Site Assessment, Sampling & Monitoring</h3>
+							<ul>
+								<li>Environmental site assessments</li>
+								<li>Groundwater and surface water sampling</li>
+								<li>Soil, sediment, and benthic sampling</li>
+								<li>Environmental sampling and monitoring</li>
+								<li>Remediation oversight and waste determination support</li>
+							</ul>
+						</article>
+
+						<article class="service-card">
+							<span class="icon solid major style4 fa-tint"></span>
+							<p class="service-kicker">Hydrogeology</p>
+							<h3>Groundwater & Water Resource Services</h3>
+							<ul>
+								<li>Deep well installation facilitation</li>
+								<li>Monitoring well installation, monitoring, and closure support</li>
+								<li>Groundwater flow determination and analysis</li>
+								<li>Water resources development, monitoring, treatment, and management</li>
+								<li>NWRB permitting assistance</li>
+							</ul>
+						</article>
+
+						<article class="service-card">
+							<span class="icon solid major style5 fa-balance-scale"></span>
+							<p class="service-kicker">Compliance</p>
+							<h3>Permitting & Regulatory Assistance</h3>
+							<ul>
+								<li>Regulatory compliance assistance</li>
+								<li>Permit coordination with relevant agencies</li>
+								<li>Environmental education and training</li>
+								<li>Analytical laboratory education and training</li>
+								<li>Compliance documentation and reporting support</li>
+							</ul>
+						</article>
+
+						<article class="service-card">
+							<span class="icon solid major style1 fa-water"></span>
+							<p class="service-kicker">Wastewater</p>
+							<h3>Wastewater Engineering Support</h3>
+							<ul>
+								<li>Wastewater physical, chemical, and biological characterization</li>
+								<li>Treatment system design and estimates</li>
+								<li>Construction facilitation</li>
+								<li>Coordination for STP and WWTF-related requirements</li>
+							</ul>
+						</article>
+
+						<article class="service-card">
+							<span class="icon solid major style2 fa-recycle"></span>
+							<p class="service-kicker">Solid Waste</p>
+							<h3>Solid Waste Management Planning</h3>
+							<ul>
+								<li>Solid waste characterization</li>
+								<li>Materials recovery facility design and estimates</li>
+								<li>Sanitary landfill design and estimates</li>
+								<li>Construction facilitation and implementation support</li>
+							</ul>
+						</article>
+
+						<article class="service-card">
+							<span class="icon solid major style3 fa-fish"></span>
+							<p class="service-kicker">Marine Habitat</p>
+							<h3>Coastal & Marine Assessment</h3>
+							<ul>
+								<li>Coral reef ecosystem assessment</li>
+								<li>Seagrass and mangrove ecosystem survey</li>
+								<li>Marine resources assessment</li>
+								<li>Coastal habitat planning and monitoring support</li>
+							</ul>
+						</article>
+
+						<article class="service-card">
+							<span class="icon solid major style4 fa-cloud-sun-rain"></span>
+							<p class="service-kicker">Monitoring</p>
+							<h3>Hydrogeologic & Meteorologic Monitoring</h3>
+							<ul>
+								<li>Automated weather and water quality station data collection</li>
+								<li>Rainfall, wind speed, temperature, humidity, and pressure monitoring</li>
+								<li>Real-time data collection and verification support</li>
+							</ul>
+						</article>
+
+						<article class="service-card">
+							<span class="icon solid major style5 fa-utensils"></span>
+							<p class="service-kicker">Food Safety</p>
+							<h3>Food Safety & Laboratory Support</h3>
+							<ul>
+								<li>GMP and HACCP analyses</li>
+								<li>Skills training on new policies and procedures</li>
+								<li>Support in sourcing equipment, software, and laboratory services</li>
+							</ul>
+						</article>
+					</div>
+				</section>
+
+				<section id="integrated-support" class="main">
+					<div class="spotlight">
+						<div class="content">
+							<p class="service-kicker">Integrated Project Support</p>
+
+							<header class="major">
+								<h2>From early planning to implementation</h2>
+							</header>
+
+							<p>
+								Many project issues do not fit neatly into one discipline. A water supply concern may involve hydrogeology, monitoring, permitting, public consultation, and engineering. A waste facility may require characterization, design, regulatory coordination, environmental monitoring, and stakeholder communication. NBCS helps connect those requirements so project teams can make better decisions earlier.
+							</p>
+
+							<ul class="actions">
+								<li><a href="contact-form.html" class="button primary" style="background-color: #2B4C99">Discuss Your Project</a></li>
+								<li><a href="stories/all-stories.html" class="button">Read Our Guides</a></li>
+							</ul>
+						</div>
+
+						<span class="image"><img src="images/pic04.jpg" alt="Environmental and engineering project support" /></span>
+					</div>
+				</section>
+
+				<section id="process" class="main special">
+					<header class="major">
+						<h2>How We Support Clients</h2>
+						<p>Our work is shaped around practical project needs, not one-size-fits-all packages.</p>
+					</header>
+
+					<div class="service-process">
+						<div class="service-step">
+							<strong>01</strong>
+							<h3>Clarify</h3>
+							<p>Understand the project scope, site conditions, documents, concerns, and required decisions.</p>
+						</div>
+
+						<div class="service-step">
+							<strong>02</strong>
+							<h3>Assess</h3>
+							<p>Review technical risks, regulatory triggers, monitoring needs, and available project data.</p>
+						</div>
+
+						<div class="service-step">
+							<strong>03</strong>
+							<h3>Coordinate</h3>
+							<p>Work with client teams, specialists, laboratories, agencies, and partner service providers when needed.</p>
+						</div>
+
+						<div class="service-step">
+							<strong>04</strong>
+							<h3>Implement</h3>
+							<p>Support documentation, monitoring, design estimates, facilitation, training, and follow-through.</p>
+						</div>
+					</div>
+				</section>
+
+				<section id="coordination" class="main">
+					<header class="major">
+						<h2>Regulatory, Technical, and Stakeholder Coordination</h2>
+					</header>
+
+					<p>
+						Environmental and engineering projects often require coordination across multiple groups. NBCS assists clients in preparing technical inputs, organizing documentation, clarifying agency-facing requirements, and supporting communication with communities or stakeholders when applicable.
+					</p>
+
+					<ul class="service-list-columns">
+						<li>Information and Education Campaigns</li>
+						<li>Public scoping and public consultation support</li>
+						<li>Conflict resolution and project management consultancy</li>
+						<li>Environmental and conservation education</li>
+						<li>Regulatory coordination and documentation support</li>
+						<li>Environmental monitoring and laboratory coordination</li>
+						<li>Technical specialist coordination</li>
+						<li>Project implementation follow-through</li>
+					</ul>
+
+					<div class="service-note">
+						<p>
+							<strong>Note:</strong> The exact scope, documents, studies, permits, and technical team members depend on project type, location, scale, regulatory coverage, site conditions, and client objectives. NBCS can help review your project context and identify the practical next steps.
+						</p>
+					</div>
+				</section>
+
+				<section id="cta" class="main special">
+					<div class="service-cta">
+						<h2>Planning a project that needs environmental or engineering support?</h2>
+
+						<p>
+							NBCS helps government and private clients address environmental assessment, regulatory compliance, water resource, wastewater, solid waste, food safety, monitoring, and project implementation requirements through practical, cost-effective, and technically sound solutions.
+						</p>
+
+						<ul class="actions special">
+							<li><a href="contact-form.html" class="button primary" style="background-color: #2B4C99">Get Started with NBCS</a></li>
+							<li><a href="about.html" class="button">About NBCS</a></li>
+						</ul>
+					</div>
+				</section>
 			</div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<div id="footer-placeholder"></div>
+		</div>
 
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<script>
+			fetch("includes/footer.html")
+				.then(response => response.text())
+				.then(data =>
+				{
+					document.getElementById("footer-placeholder").innerHTML = data;
+				});
+		</script>
 	</body>
-
 </html>
