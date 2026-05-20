@@ -1,0 +1,435 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="icon" href="../favicon.ico">
+		<title>Stories and Insights | NBCS</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Read NBCS stories, guides, and technical insights on environmental compliance, water resources, engineering, and sustainable project development in the Philippines." />
+		<meta name="robots" content="index, follow" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Stories and Insights | NBCS" />
+		<meta property="og:description" content="Practical environmental, engineering, and compliance insights from N. Aguirre Business Consultancy Services." />
+		<meta property="og:image" content="../images/logo.svg" />
+
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+
+		<style>
+			/* Stories Index Helpers - can be moved to assets/css/main.css later */
+
+			.stories-intro {
+				max-width: 820px;
+				margin: 0 auto 2.5em auto;
+				text-align: center;
+			}
+
+			.stories-toolbar {
+				display: flex;
+				gap: 1em;
+				align-items: center;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				margin: 0 0 2.25em 0;
+			}
+
+			.story-search {
+				flex: 1 1 260px;
+				max-width: 420px;
+			}
+
+			.story-filters {
+				display: flex;
+				gap: 0.6em;
+				flex-wrap: wrap;
+				justify-content: flex-end;
+			}
+
+			.story-filter {
+				border: solid 1px #dddddd;
+				border-radius: 8px;
+				background: #ffffff;
+				color: #636363 !important;
+				font-size: 0.75em;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				padding: 0.45em 0.9em;
+				cursor: pointer;
+				transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+			}
+
+			.story-filter:hover,
+			.story-filter.active {
+				background: #2B4C99;
+				border-color: #2B4C99;
+				color: #ffffff !important;
+			}
+
+			.featured-story {
+				margin: 0 0 3em 0;
+			}
+
+			.featured-story .spotlight .image {
+				border: none;
+				border-radius: 8px;
+				padding: 0;
+				width: 360px;
+				height: 360px;
+				flex: 0 0 360px;
+				overflow: hidden;
+			}
+
+			.featured-story .spotlight .image img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+				border-radius: 8px;
+			}
+
+			.story-kicker,
+			.story-card-category {
+				font-size: 0.75em;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: #2B4C99;
+				margin-bottom: 0.75em;
+			}
+
+			.story-card-grid {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 1.5em;
+				margin: 0 0 2em 0;
+			}
+
+			.story-card {
+				display: flex;
+				flex-direction: column;
+				border: solid 1px #dddddd;
+				border-radius: 8px;
+				overflow: hidden;
+				background: #ffffff;
+				min-height: 100%;
+				transition: transform 0.2s ease, box-shadow 0.2s ease;
+			}
+
+			.story-card:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 0.75em 1.5em rgba(0, 0, 0, 0.08);
+			}
+
+			.story-card-image {
+				display: block;
+				width: 100%;
+				aspect-ratio: 16 / 10;
+				overflow: hidden;
+				border-bottom: none !important;
+			}
+
+			.story-card-image img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+				transition: transform 0.25s ease;
+			}
+
+			.story-card:hover .story-card-image img {
+				transform: scale(1.04);
+			}
+
+			.story-card-content {
+				display: flex;
+				flex-direction: column;
+				flex: 1;
+				padding: 1.35em;
+			}
+
+			.story-card h3 {
+				margin: 0 0 0.65em 0;
+				font-size: 1.15em;
+				line-height: 1.35;
+			}
+
+			.story-card h3 a {
+				border-bottom: none;
+			}
+
+			.story-card p {
+				font-size: 0.95em;
+				margin-bottom: 1.25em;
+			}
+
+			.story-card-meta {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4em 0.75em;
+				margin-top: auto;
+				padding-top: 1em;
+				border-top: solid 1px #dddddd;
+				font-size: 0.8em;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+				color: #777777;
+			}
+
+			.story-empty {
+				display: none;
+				text-align: center;
+				padding: 2em;
+				border: solid 1px #dddddd;
+				border-radius: 8px;
+				background: rgba(222, 222, 222, 0.25);
+			}
+
+			.story-index-cta {
+				margin-top: 3em;
+				padding: 2em;
+				border-radius: 8px;
+				background: rgba(222, 222, 222, 0.25);
+				text-align: center;
+			}
+
+			@media screen and (max-width: 980px) {
+				.stories-toolbar {
+					justify-content: center;
+				}
+
+				.story-search {
+					max-width: 100%;
+				}
+
+				.story-filters {
+					justify-content: center;
+				}
+
+				.featured-story .spotlight .image {
+					width: 100%;
+					height: auto;
+					aspect-ratio: 1 / 1;
+					flex: 0 0 auto;
+					margin-left: 0;
+				}
+
+				.story-card-grid {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
+			}
+
+			@media screen and (max-width: 736px) {
+				.story-card-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-0HM8RZLQFF"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-0HM8RZLQFF');
+		</script>
+
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "CollectionPage",
+			"name": "Stories and Insights | NBCS",
+			"description": "A collection of NBCS stories, guides, and technical insights on environmental compliance, water resources, engineering, and sustainable project development.",
+			"publisher": {
+				"@type": "Organization",
+				"name": "N. Aguirre Business Consultancy Services"
+			}
+		}
+		</script>
+	</head>
+
+	<body class="is-preload">
+		<div id="wrapper">
+
+			<header id="header">
+				<h1>Stories and Insights</h1>
+				<p>Practical guidance on environmental compliance, water resources, engineering, and sustainable project development.</p>
+			</header>
+
+			<nav id="nav">
+				<ul>
+					<li><a href="../index.html">Home</a></li>
+					<li><a href="../about.html">About Us</a></li>
+					<li><a href="../generic.html">Services</a></li>
+					<li><a href="../generic.html">Projects</a></li>
+					<li><a href="all-stories.html" class="active">Stories</a></li>
+					<li><a href="../contact-form.html">Get Started</a></li>
+				</ul>
+			</nav>
+
+			<div id="main">
+				<section id="stories" class="main special">
+					<header class="major">
+						<h2>Latest NBCS Guides</h2>
+					</header>
+
+					<div class="stories-intro">
+						<p>
+							Browse practical articles written for project owners, facility managers, technical teams, and organizations working through environmental requirements in the Philippines.
+						</p>
+					</div>
+
+					<div class="stories-toolbar">
+						<input id="story-search" class="story-search" type="text" placeholder="Search stories..." aria-label="Search stories">
+
+						<div class="story-filters" aria-label="Story categories">
+							<button class="story-filter active" type="button" data-filter="all">All</button>
+							<button class="story-filter" type="button" data-filter="Environmental Compliance">Compliance</button>
+							<button class="story-filter" type="button" data-filter="Water Resources">Water Resources</button>
+						</div>
+					</div>
+
+					<section class="featured-story">
+						<div class="spotlight">
+							<div class="content">
+								<p class="story-kicker">Featured Guide</p>
+
+								<header class="major">
+									<h2><a href="compliance-mistakes.html">5 Common Environmental Compliance Mistakes Companies Make</a></h2>
+								</header>
+
+								<p>
+									Small compliance gaps can become expensive problems when they are ignored. This guide explains practical ways companies can prevent common issues involving ECC/CNC screening, monitoring reports, hazardous waste records, air permits, and operational changes.
+								</p>
+
+								<ul class="actions">
+									<li><a href="compliance-mistakes.html" class="button primary" style="background-color: #2B4C99">Read Featured Story</a></li>
+								</ul>
+							</div>
+
+							<span class="image"><img src="../images/compliance-tomfisk.jpg" alt="Environmental field and compliance work"></span>
+						</div>
+					</section>
+
+					<div id="story-card-grid" class="story-card-grid"></div>
+
+					<div id="story-empty" class="story-empty">
+						<p>No stories match your current search or filter.</p>
+					</div>
+
+					<section class="story-index-cta">
+						<h2>Looking for guidance on your own project?</h2>
+						<p>
+							NBCS can help review your environmental documents, project risks, reporting obligations, water supply concerns, and next practical steps.
+						</p>
+
+						<ul class="actions special">
+							<li><a href="../contact-form.html" class="button primary" style="background-color: #2B4C99">Contact NBCS</a></li>
+							<li><a href="../index.html" class="button">Back to Home</a></li>
+						</ul>
+					</section>
+				</section>
+			</div>
+
+			<div id="footer-placeholder"></div>
+		</div>
+
+		<script src="../assets/js/jquery.min.js"></script>
+		<script src="../assets/js/jquery.scrollex.min.js"></script>
+		<script src="../assets/js/jquery.scrolly.min.js"></script>
+		<script src="../assets/js/browser.min.js"></script>
+		<script src="../assets/js/breakpoints.min.js"></script>
+		<script src="../assets/js/util.js"></script>
+		<script src="../assets/js/main.js"></script>
+
+		<script>
+			fetch("../includes/footer.html")
+				.then(response => response.text())
+				.then(data =>
+				{
+					document.getElementById("footer-placeholder").innerHTML = data;
+				});
+		</script>
+
+		<script>
+			const stories = [
+				{
+					title: "5 Common Environmental Compliance Mistakes Companies Make",
+					category: "Environmental Compliance",
+					excerpt: "From missed reporting schedules to incomplete hazardous waste records, here are practical ways companies can prevent common environmental compliance gaps before they become costly issues.",
+					date: "February 10, 2026",
+					updated: "May 18, 2026",
+					readTime: "7 min read",
+					url: "compliance-mistakes.html",
+					image: "../images/compliance-tomfisk.jpg"
+				},
+				{
+					title: "Groundwater Contamination and How to Protect Your Project's Water Supply",
+					category: "Water Resources",
+					excerpt: "Groundwater protection starts before a well is drilled or a storage area is built. This guide explains how project owners can identify risks early, monitor water quality, and protect a reliable water supply.",
+					date: "May 19, 2026",
+					updated: "May 19, 2026",
+					readTime: "9 min read",
+					url: "groundwater-contamination-water-supply.html",
+					image: "../images/groundwater-supply.jpg"
+				}
+			];
+
+			const grid = document.getElementById('story-card-grid');
+			const empty = document.getElementById('story-empty');
+			const searchInput = document.getElementById('story-search');
+			const filterButtons = document.querySelectorAll('.story-filter');
+			let activeFilter = 'all';
+
+			function storyMatches(story, query) {
+				const text = `${story.title} ${story.category} ${story.excerpt}`.toLowerCase();
+				return text.includes(query.toLowerCase());
+			}
+
+			function renderStories() {
+				const query = searchInput.value.trim();
+
+				const visibleStories = stories.filter(story => {
+					const categoryMatch = activeFilter === 'all' || story.category === activeFilter;
+					const queryMatch = !query || storyMatches(story, query);
+					return categoryMatch && queryMatch;
+				});
+
+				grid.innerHTML = visibleStories.map(story => `
+					<article class="story-card" data-category="${story.category}">
+						<a class="story-card-image" href="${story.url}">
+							<img src="${story.image}" alt="${story.title}">
+						</a>
+
+						<div class="story-card-content">
+							<p class="story-card-category">${story.category}</p>
+							<h3><a href="${story.url}">${story.title}</a></h3>
+							<p>${story.excerpt}</p>
+
+							<div class="story-card-meta">
+								<span>${story.date}</span>
+								<span>${story.readTime}</span>
+							</div>
+						</div>
+					</article>
+				`).join('');
+
+				empty.style.display = visibleStories.length ? 'none' : 'block';
+			}
+
+			filterButtons.forEach(button => {
+				button.addEventListener('click', () => {
+					filterButtons.forEach(item => item.classList.remove('active'));
+					button.classList.add('active');
+					activeFilter = button.dataset.filter;
+					renderStories();
+				});
+			});
+
+			searchInput.addEventListener('input', renderStories);
+			renderStories();
+		</script>
+	</body>
+</html>
