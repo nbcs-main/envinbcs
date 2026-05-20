@@ -1,88 +1,443 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Projects</title>
+		<link rel="icon" href="favicon.ico">
+		<title>Projects | NBCS</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Explore selected NBCS projects across environmental assessment, water resources, engineering, compliance, monitoring, and stakeholder support services in the Philippines." />
+		<meta name="robots" content="index, follow" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Projects | NBCS" />
+		<meta property="og:description" content="Selected environmental, engineering, compliance, water resource, and monitoring projects supported by N. Aguirre Business Consultancy Services." />
+		<meta property="og:image" content="images/logo.svg" />
+
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<style>
+			/* Projects Page Helpers - can be moved to assets/css/main.css later */
+
+			.projects-intro {
+				max-width: 860px;
+				margin: 0 auto 2.25em auto;
+				text-align: center;
+			}
+
+			.project-kicker {
+				font-size: 0.75em;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: #2B4C99;
+				margin-bottom: 0.75em;
+			}
+
+			.project-toolbar {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+				gap: 0.75em;
+				max-width: 980px;
+				margin: 0 auto 2em auto;
+			}
+
+			.project-search {
+				max-width: 360px;
+				width: 100%;
+			}
+
+			.project-search input {
+				width: 100%;
+			}
+
+			.project-filters {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 0.35em;
+			}
+
+			.project-filter {
+				border: 0;
+				border-radius: 8px;
+				background: transparent;
+				color: #636363 !important;
+				font-size: 0.75em;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				padding: 0.65em 1.1em;
+				min-height: 2.75em;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				line-height: 1.2;
+				cursor: pointer;
+				transition: background-color 0.2s ease, color 0.2s ease;
+			}
+
+			.project-filter:hover {
+				background: rgba(222, 222, 222, 0.35);
+				color: #2B4C99 !important;
+			}
+
+			.project-filter.active {
+				background: #f7f7f7;
+				box-shadow: inset 0 -3px 0 #2B4C99;
+				color: #2B4C99 !important;
+			}
+
+			.project-grid {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 1.5em;
+				margin-top: 1.5em;
+			}
+
+			.project-card {
+				border: solid 1px #dddddd;
+				border-radius: 8px;
+				background: #ffffff;
+				overflow: hidden;
+				min-height: 100%;
+				display: flex;
+				flex-direction: column;
+				transition: transform 0.2s ease, box-shadow 0.2s ease;
+			}
+
+			.project-card:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 0.75em 1.5em rgba(0, 0, 0, 0.08);
+			}
+
+			.project-card-image {
+				position: relative;
+				width: 100%;
+				aspect-ratio: 16 / 10;
+				overflow: hidden;
+				background: rgba(222, 222, 222, 0.25);
+			}
+
+			.project-card-image img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+				transition: transform 0.3s ease;
+			}
+
+			.project-card:hover .project-card-image img {
+				transform: scale(1.04);
+			}
+
+			.project-card-content {
+				padding: 1.5em;
+				display: flex;
+				flex: 1;
+				flex-direction: column;
+			}
+
+			.project-meta {
+				font-size: 0.78em;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				margin-bottom: 0.75em;
+				opacity: 0.72;
+			}
+
+			.project-meta .project-category {
+				color: #2B4C99;
+				font-weight: 600;
+				opacity: 1;
+			}
+
+			.project-card h3 {
+				margin-bottom: 0.65em;
+			}
+
+			.project-card p {
+				font-size: 0.95em;
+				margin-bottom: 1.15em;
+			}
+
+			.project-tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.45em;
+				margin-top: auto;
+			}
+
+			.project-tag {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 999px;
+				background: rgba(43, 76, 153, 0.08);
+				color: #2B4C99;
+				font-size: 0.75em;
+				font-weight: 600;
+				padding: 0.3em 0.75em;
+			}
+
+			.project-empty {
+				display: none;
+				max-width: 720px;
+				margin: 2em auto 0 auto;
+				padding: 1.5em;
+				border-radius: 8px;
+				background: rgba(222, 222, 222, 0.25);
+				text-align: center;
+			}
+
+			.project-update-note {
+				margin-top: 2.5em;
+				padding: 2em;
+				border-radius: 8px;
+				background: rgba(43, 76, 153, 0.08);
+				border: solid 1px rgba(43, 76, 153, 0.2);
+				text-align: center;
+			}
+
+			.project-update-note h2 {
+				color: #2B4C99;
+			}
+
+			@media screen and (max-width: 980px) {
+				.project-grid {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
+			}
+
+			@media screen and (max-width: 736px) {
+				.project-toolbar {
+					align-items: stretch;
+				}
+
+				.project-search {
+					max-width: 100%;
+				}
+
+				.project-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-0HM8RZLQFF"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-0HM8RZLQFF');
+		</script>
+
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "CollectionPage",
+			"name": "Projects | NBCS",
+			"description": "Selected environmental, engineering, compliance, water resource, and monitoring projects supported by N. Aguirre Business Consultancy Services.",
+			"publisher": {
+				"@type": "Organization",
+				"name": "N. Aguirre Business Consultancy Services"
+			}
+		}
+		</script>
 	</head>
+
 	<body class="is-preload">
+		<div id="wrapper">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+			<header id="header">
+				<h1>Projects</h1>
+				<p>Selected environmental, engineering, water resource, compliance, and monitoring work supported by NBCS.</p>
+			</header>
 
-				<!-- Header -->
-					<header id="header">
-						<h1>Generic</h1>
-						<p>Ipsum dolor sit amet nullam</p>
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About Us</a></li>
+					<li><a href="services.html">Services</a></li>
+					<li><a href="projects.html" class="active">Projects</a></li>
+					<li><a href="stories/all-stories.html">Stories</a></li>
+					<li><a href="contact-form.html">Get Started</a></li>
+				</ul>
+			</nav>
+
+			<div id="main">
+
+				<section id="projects-overview" class="main special">
+					<header class="major">
+						<h2>Project experience across technical and regulatory needs</h2>
 					</header>
-				<!-- Nav -->
-					<nav id="nav">
-						<ul>
-							<li><a href="index">Overview</a></li>
-							<li><a href="#services" class="active">Services</a></li>
-							<li><a href="#projects">Projects</a></li>
-							<li><a href="#blog">Blogs</a></li>
-							<li><a href="#cta">Get Started</a></li>
-						</ul>
-					</nav>
-				<!-- Main -->
-					<div id="main">
 
-						<!-- Content -->
-							<section id="content" class="main">
-								<span class="image main"><img src="images/pic04.jpg" alt="" /></span>
-								<h2>Magna feugiat lorem</h2>
-								<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis fames ac ante ipsum primis in faucibus.</p>
-								<p>Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Consequat leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit enim turpis lorem ipsum dolor sit amet feugiat. Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet est velit quis lorem.</p>
-								<h2>Tempus veroeros</h2>
-								<p>Cep risus aliquam gravida cep ut lacus amet. Adipiscing faucibus nunc placerat. Tempus adipiscing turpis non blandit accumsan eget lacinia nunc integer interdum amet aliquam ut orci non col ut ut praesent. Semper amet interdum mi. Phasellus enim laoreet ac ac commodo faucibus faucibus. Curae ante vestibulum ante. Blandit. Ante accumsan nisi eu placerat gravida placerat adipiscing in risus fusce vitae ac mi accumsan nunc in accumsan tempor blandit aliquet aliquet lobortis. Ultricies blandit lobortis praesent turpis. Adipiscing accumsan adipiscing adipiscing ac lacinia cep. Orci blandit a iaculis adipiscing ac. Vivamus ornare laoreet odio vis praesent nunc lorem mi. Erat. Tempus sem faucibus ac id. Vis in blandit. Nascetur ultricies blandit ac. Arcu aliquam. Accumsan mi eget adipiscing nulla. Non vestibulum ac interdum condimentum semper commodo massa arcu.</p>
-							</section>
+					<div class="projects-intro">
+						<p>
+							NBCS supports projects that require practical environmental, engineering, water resource, monitoring, permitting, documentation, and stakeholder coordination. This page is designed to grow as additional project summaries are prepared for public viewing.
+						</p>
+					</div>
+				</section>
 
+				<section id="project-list" class="main">
+					<header class="major">
+						<h2>Selected Projects</h2>
+						<p>Search or filter by service area. Each placeholder card can be edited directly in the project list script.</p>
+					</header>
+
+					<div class="project-toolbar">
+						<div class="project-search">
+							<input type="text" id="project-search-input" placeholder="Search projects..." aria-label="Search projects" />
+						</div>
+
+						<div class="project-filters" aria-label="Project filters">
+							<button class="project-filter active" type="button" data-category="All">All</button>
+							<button class="project-filter" type="button" data-category="Environmental">Environmental</button>
+							<button class="project-filter" type="button" data-category="Water Resources">Water Resources</button>
+							<button class="project-filter" type="button" data-category="Engineering">Engineering</button>
+							<button class="project-filter" type="button" data-category="Compliance">Compliance</button>
+						</div>
 					</div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<h2>Aliquam sed mauris</h2>
-							<p>Sed lorem ipsum dolor sit amet et nullam consequat feugiat consequat magna adipiscing tempus etiam dolore veroeros. eget dapibus mauris. Cras aliquet, nisl ut viverra sollicitudin, ligula erat egestas velit, vitae tincidunt odio.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">Learn More</a></li>
-							</ul>
-						</section>
-						<section>
-							<h2>Etiam feugiat</h2>
-							<dl class="alt">
-								<dt>Address</dt>
-								<dd>1234 Somewhere Road &bull; Nashville, TN 00000 &bull; USA</dd>
-								<dt>Phone</dt>
-								<dd>(000) 000-0000 x 0000</dd>
-								<dt>Email</dt>
-								<dd><a href="#">information@untitled.tld</a></dd>
-							</dl>
-							<ul class="icons">
-								<li><a href="#" class="icon brands fa-twitter alt"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands fa-facebook-f alt"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-instagram alt"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon brands fa-github alt"><span class="label">GitHub</span></a></li>
-								<li><a href="#" class="icon brands fa-dribbble alt"><span class="label">Dribbble</span></a></li>
-							</ul>
-						</section>
-						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-					</footer>
+					<div id="project-grid" class="project-grid"></div>
 
+					<div id="project-empty" class="project-empty">
+						<p>No projects match the current search or filter. Try another keyword or category.</p>
+					</div>
+				</section>
+
+				<section id="project-note" class="main special">
+					<div class="project-update-note">
+						<h2>This Projects page is still being updated.</h2>
+						<p>
+							The project summaries shown here are placeholders for layout and testing. NBCS is still reviewing which completed and ongoing works may be published, summarized, generalized, or omitted to respect client confidentiality, site security, and project-specific requirements. Remove this notice once the final public project entries are ready.
+						</p>
+
+						<ul class="actions special">
+							<li><a href="contact-form.html" class="button primary" style="background-color: #2B4C99">Discuss a Project</a></li>
+							<li><a href="services.html" class="button">View Services</a></li>
+						</ul>
+					</div>
+				</section>
 			</div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<div id="footer-placeholder"></div>
+		</div>
 
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<script>
+			const projects = [
+				{
+					title: "Environmental Assessment and Compliance Support for a Development Project",
+					category: "Environmental",
+					year: "2026",
+					location: "Philippines",
+					excerpt: "Placeholder summary for an environmental assessment project involving site review, baseline information, documentation support, and coordination for project compliance requirements.",
+					tags: ["Assessment", "Permitting", "Monitoring"],
+					image: "images/pic02.jpg",
+					url: "generic.html"
+				},
+				{
+					title: "Groundwater and Water Resource Evaluation for Project Planning",
+					category: "Water Resources",
+					year: "2026",
+					location: "Philippines",
+					excerpt: "Placeholder summary for a water resource engagement involving groundwater review, sampling support, monitoring considerations, and practical recommendations for project water supply planning.",
+					tags: ["Groundwater", "Sampling", "Water Supply"],
+					image: "images/pic04.jpg",
+					url: "generic.html"
+				},
+				{
+					title: "Wastewater and Solid Waste Technical Support for Facility Operations",
+					category: "Engineering",
+					year: "2026",
+					location: "Philippines",
+					excerpt: "Placeholder summary for an engineering support project involving wastewater or solid waste characterization, treatment or facility planning, and implementation coordination.",
+					tags: ["Wastewater", "Solid Waste", "Engineering"],
+					image: "images/pic05.jpg",
+					url: "generic.html"
+				}
+			];
+
+			let activeCategory = "All";
+
+			function renderProjects() {
+				const grid = document.getElementById("project-grid");
+				const empty = document.getElementById("project-empty");
+				const searchValue = document.getElementById("project-search-input").value.trim().toLowerCase();
+
+				const filteredProjects = projects.filter(project => {
+					const matchesCategory = activeCategory === "All" || project.category === activeCategory;
+					const searchableText = [
+						project.title,
+						project.category,
+						project.year,
+						project.location,
+						project.excerpt,
+						project.tags.join(" ")
+					].join(" ").toLowerCase();
+
+					return matchesCategory && searchableText.includes(searchValue);
+				});
+
+				grid.innerHTML = filteredProjects.map(project => `
+					<article class="project-card">
+						<a href="${project.url}" class="project-card-image" aria-label="Open ${project.title}">
+							<img src="${project.image}" alt="${project.title}" />
+						</a>
+
+						<div class="project-card-content">
+							<div class="project-meta">
+								<span class="project-category">${project.category}</span>
+								<span> · ${project.year}</span>
+								<span> · ${project.location}</span>
+							</div>
+
+							<h3><a href="${project.url}">${project.title}</a></h3>
+							<p>${project.excerpt}</p>
+
+							<div class="project-tags">
+								${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join("")}
+							</div>
+						</div>
+					</article>
+				`).join("");
+
+				empty.style.display = filteredProjects.length ? "none" : "block";
+			}
+
+			document.querySelectorAll(".project-filter").forEach(button => {
+				button.addEventListener("click", () => {
+					document.querySelectorAll(".project-filter").forEach(filter => filter.classList.remove("active"));
+					button.classList.add("active");
+					activeCategory = button.dataset.category;
+					renderProjects();
+				});
+			});
+
+			document.getElementById("project-search-input").addEventListener("input", renderProjects);
+
+			renderProjects();
+		</script>
+
+		<script>
+			fetch("includes/footer.html")
+				.then(response => response.text())
+				.then(data =>
+				{
+					document.getElementById("footer-placeholder").innerHTML = data;
+				});
+		</script>
 	</body>
-
 </html>
