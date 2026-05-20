@@ -145,6 +145,24 @@
 				color: #777777;
 			}
 
+			#overview .statistics {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: stretch;
+				gap: 0;
+				max-width: 100%;
+				margin-left: auto;
+				margin-right: auto;
+				padding-left: 0;
+			}
+			
+			#overview .statistics li {
+				flex: 1 1 180px;
+				max-width: 220px;
+				min-width: 160px;
+			}
+
 			@media screen and (max-width: 980px) {
 				.service-grid {
 					grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -160,9 +178,14 @@
 				.service-process {
 					grid-template-columns: 1fr;
 				}
-
+			
 				.service-list-columns {
 					columns: 1;
+				}
+			
+				#overview .statistics li {
+					flex: 1 1 100%;
+					max-width: 100%;
 				}
 			}
 		</style>
