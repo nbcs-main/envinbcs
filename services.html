@@ -146,11 +146,10 @@
 			}
 
 			#overview .statistics {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: center;
-				align-items: stretch;
+				display: grid;
+				grid-template-columns: repeat(5, minmax(0, 1fr));
 				gap: 0;
+				width: 100%;
 				max-width: 100%;
 				margin-left: auto;
 				margin-right: auto;
@@ -158,9 +157,19 @@
 			}
 			
 			#overview .statistics li {
-				flex: 1 1 180px;
-				max-width: 220px;
-				min-width: 160px;
+				min-width: 0;
+				width: auto;
+				max-width: none;
+				padding-left: 1em;
+				padding-right: 1em;
+				overflow-wrap: anywhere;
+				word-break: normal;
+			}
+			
+			#overview .statistics li strong {
+				font-size: 1.45em;
+				line-height: 1.1;
+				white-space: normal;
 			}
 
 			@media screen and (max-width: 980px) {
@@ -169,6 +178,9 @@
 				}
 
 				.service-process {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
+				#overview .statistics {
 					grid-template-columns: repeat(2, minmax(0, 1fr));
 				}
 			}
@@ -183,9 +195,13 @@
 					columns: 1;
 				}
 			
+				#overview .statistics {
+					grid-template-columns: 1fr;
+				}
+			
 				#overview .statistics li {
-					flex: 1 1 100%;
-					max-width: 100%;
+					padding-left: 1.25em;
+					padding-right: 1.25em;
 				}
 			}
 		</style>
