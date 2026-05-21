@@ -172,6 +172,24 @@
 				white-space: normal;
 			}
 
+			#integrated-support .spotlight .image {
+				border: none;
+				border-radius: 8px;
+				padding: 0;
+				width: 400px;
+				height: 400px;
+				flex: 0 0 400px;
+				overflow: hidden;
+			}
+			
+			#integrated-support .spotlight .image img {
+				border-radius: 8px;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+			}
+
 			@media screen and (max-width: 980px) {
 				.service-grid {
 					grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -182,6 +200,13 @@
 				}
 				#overview .statistics {
 					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
+				#integrated-support .spotlight .image {
+					width: 100%;
+					height: auto;
+					aspect-ratio: 1 / 1;
+					flex: 0 0 auto;
+					margin-left: 0;
 				}
 			}
 
@@ -293,13 +318,13 @@
 						<li class="style4">
 							<span class="icon solid fa-file-alt"></span>
 							<strong>Compliance</strong>
-							Permits & reporting
+							Permits, reporting & consultation
 						</li>
 
 						<li class="style5">
 							<span class="icon solid fa-users"></span>
-							<strong>Community</strong>
-							IEC & consultation
+							<strong>Retainership</strong>
+							Ongoing coordination & support
 						</li>
 					</ul>
 				</section>
@@ -355,14 +380,15 @@
 
 						<article class="service-card">
 							<span class="icon solid major style5 fa-balance-scale"></span>
-							<p class="service-kicker">Compliance</p>
-							<h3>Permitting & Regulatory Assistance</h3>
+							<p class="service-kicker">Compliance & Retainership</p>
+							<h3>Permitting, Reporting & Ongoing Support</h3>
 							<ul>
 								<li>Regulatory compliance assistance</li>
 								<li>Permit coordination with relevant agencies</li>
 								<li>Environmental education and training</li>
 								<li>Analytical laboratory education and training</li>
 								<li>Compliance documentation and reporting support</li>
+								<li>Retainership for ongoing compliance coordination and other services</li>
 							</ul>
 						</article>
 
@@ -497,6 +523,7 @@
 						<li>Conflict resolution and project management consultancy</li>
 						<li>Environmental and conservation education</li>
 						<li>Regulatory coordination and documentation support</li>
+						<li>Retainership for ongoing compliance coordination and documentation support</li>
 						<li>Environmental monitoring and laboratory coordination</li>
 						<li>Technical specialist coordination</li>
 						<li>Project implementation follow-through</li>
