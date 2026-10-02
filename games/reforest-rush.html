@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reforest Rush</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+<style>
+:root{--bg1:#cfeeff;--bg2:#e6f5d8;--card:rgba(255,255,255,.92);--ink:#1d3a22;--mut:#5b7a60;--acc:#2e9d4f;--line:#cfe3c8;--c0:#2e9d4f;--c1:#2b7bd1;--c2:#e08a1e;--c3:#b04fc4}
+@media (prefers-color-scheme:dark){:root{--bg1:#0b1a24;--bg2:#10231a;--card:rgba(23,42,27,.94);--ink:#e3f4e0;--mut:#8fb596;--acc:#4cc16f;--line:#26422b}}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:linear-gradient(var(--bg1),var(--bg2)) fixed;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 16px 50px}
+h1{margin:0;font-size:1.8rem}.sub{color:var(--mut);margin:4px 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+label{display:block;font-size:.85rem;color:var(--mut);margin:8px 0 4px}
+input,select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;text-transform:none}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 18px;background:var(--acc);color:#fff;font-weight:700}
+button.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.split{justify-content:space-between}
+.bar{margin:12px 0}.top{display:flex;justify-content:space-between;font-weight:700}
+.track{position:relative;height:28px;background:rgba(127,127,127,.15);border-radius:999px;margin-top:4px}
+.fill{height:100%;border-radius:999px;transition:width .1s}
+.mk{position:absolute;top:-6px;font-size:26px;transform:translateX(-60%);transition:left .1s}
+.big{width:100%;font-size:1.6rem;padding:30px 10px;user-select:none;touch-action:manipulation;position:relative}
+.status{text-align:center;font-size:1.3rem;font-weight:800;min-height:2em}
+.mut{color:var(--mut);font-size:.9rem}.hide{display:none}
+.code{font-size:1.5rem;letter-spacing:.2em;font-weight:800}
+#fx{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+#fx span{position:absolute;font-size:24px;animation:up .8s ease-out forwards}
+@keyframes up{to{transform:translateY(-120px) scale(1.4);opacity:0}}
+</style></head>
+<body><main>
+<h1>🌳 Reforest Rush</h1>
+<p class="sub">2–4 rangers. Mash <b>SPACE</b> or tap the button to plant the most trees before time runs out.</p>
+
+<section id="home" class="card">
+  <label for="nm">Ranger name</label><input id="nm" maxlength="12" placeholder="e.g. Mossy">
+  <p class="row"><button id="create">Create room</button></p>
+  <label for="code">…or join a friend's room</label>
+  <div class="row"><input id="code" maxlength="4" placeholder="CODE" style="flex:1;text-transform:uppercase"><button id="join" class="alt">Join</button></div>
+  <p id="msg" class="mut"></p>
+</section>
+
+<section id="game" class="hide">
+  <div class="card">
+    <div class="row split"><span>Room <span class="code" id="roomLbl"></span></span>
+      <span class="row"><button class="alt" id="copy">Copy invite link</button><button class="alt" id="mute">🔊</button></span></div>
+    <div class="status" id="status"></div>
+    <div id="bars"></div>
+    <p class="mut" id="fact" style="text-align:center"></p>
+  </div>
+  <button id="tap" class="big" disabled>🌱 PLANT!</button>
+  <div class="card row split" id="hostCtl" style="margin-top:14px">
+    <span class="row"><label style="margin:0">Round</label>
+      <select id="dur" style="width:auto"><option value="10000">10s</option><option value="15000" selected>15s</option><option value="30000">30s</option></select></span>
+    <button id="start">Start game</button>
+  </div>
+  <p class="mut" id="hint"></p>
+</section>
+</main>
+<div id="fx"></div>
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const PRE='reforest-rush-', COLORS=['--c0','--c1','--c2','--c3'];
+const FACTS=['One mature tree can absorb about 22 kg of CO₂ a year.','Mangroves shield coasts and store huge amounts of carbon.','Forests are home to roughly 80% of land-based species.','Trees can cool city streets by several degrees.','Reforesting watersheds keeps drinking water cleaner.'];
+let peer,isHost=false,conns=new Map(),hostConn=null,myId='',myName='',room='';
+let st={phase:'lobby',round:0,left:0,dur:15000,players:[]},taps=0,lastRound=0,sendT=null,muted=false,ac=null;
+const H={players:[],phase:'lobby',round:0,t0:0,endAt:0,left:0,dur:15000,timer:null};
+
+const stage=n=>n>=60?'🌳':n>=25?'🌲':n>=8?'🌿':'🌱';
+function beep(f,d=.05){if(muted)return;try{ac=ac||new AudioContext();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.type='triangle';g.gain.value=.06;o.connect(g);g.connect(ac.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+d);o.stop(ac.currentTime+d)}catch(e){}}
+
+/* ---------- host logic ---------- */
+function bcast(){
+  const s={t:'state',phase:H.phase,round:H.round,left:H.left,dur:H.dur,players:H.players.map(p=>({id:p.id,name:p.name,taps:p.taps}))};
+  conns.forEach(c=>c.open&&c.send(s));applyState(s);
+}
+function hostStart(){
+  if(H.players.length<2||!(H.phase==='lobby'||H.phase==='done'))return;
+  H.dur=+$('#dur').value;H.round++;H.phase='count';H.t0=performance.now();H.players.forEach(p=>p.taps=0);
+  clearInterval(H.timer);
+  H.timer=setInterval(()=>{
+    const n=performance.now();
+    if(H.phase==='count'){H.left=H.t0+3000-n;if(H.left<=0){H.phase='play';H.endAt=n+H.dur;H.left=H.dur;}}
+    else if(H.phase==='play'){H.left=Math.max(0,H.endAt-n);if(H.left<=0){H.phase='done';clearInterval(H.timer);setTimeout(bcast,400);}}
+    bcast();
+  },100);
+  bcast();
+}
+function hostConnection(c){
+  c.on('data',m=>{
+    if(m.t==='hello'){
+      if(H.players.length>=4||!(H.phase==='lobby'||H.phase==='done')){c.send({t:'full'});setTimeout(()=>c.close(),300);return;}
+      H.players.push({id:c.peer,name:String(m.name||'Ranger').slice(0,12),taps:0});conns.set(c.peer,c);bcast();
+    }else if(m.t==='taps'&&m.r===H.round&&H.phase!=='lobby'){
+      const p=H.players.find(x=>x.id===c.peer);if(p&&m.n>p.taps&&m.n<=1000)p.taps=m.n;
+    }
+  });
+  c.on('close',()=>{conns.delete(c.peer);if(H.phase==='lobby'||H.phase==='done')H.players=H.players.filter(p=>p.id!==c.peer);bcast();});
+}
+
+/* ---------- client / shared ---------- */
+function applyState(s){
+  if(s.round!==lastRound){lastRound=s.round;taps=0;}
+  if(st.phase==='play'&&s.phase==='done'&&!isHost)sendTaps();
+  if(s.phase==='count'&&Math.ceil(s.left/1000)!==Math.ceil(st.left/1000))beep(440,.08);
+  if(st.phase==='count'&&s.phase==='play')beep(880,.25);
+  st=s;render();
+}
+function sendTaps(){
+  clearTimeout(sendT);sendT=null;
+  if(isHost){const p=H.players.find(x=>x.id===myId);if(p)p.taps=taps;}
+  else if(hostConn&&hostConn.open)hostConn.send({t:'taps',n:taps,r:st.round});
+}
+function tap(){
+  if(st.phase!=='play')return;
+  taps++;beep(300+Math.min(taps,80)*8);
+  const f=document.createElement('span');f.textContent='🌱';
+  const b=$('#tap').getBoundingClientRect();
+  f.style.left=(b.left+Math.random()*b.width)+'px';f.style.top=(b.top+10)+'px';
+  $('#fx').appendChild(f);setTimeout(()=>f.remove(),800);
+  render();if(!sendT)sendT=setTimeout(sendTaps,60);
+}
+function render(){
+  const L=st.players.map(p=>({...p,me:p.id===myId}));
+  L.forEach(p=>{if(p.me&&(st.phase==='play'||st.phase==='done'))p.taps=Math.max(p.taps,taps);});
+  const max=Math.max(30,...L.map(p=>p.taps));
+  $('#bars').innerHTML=L.map((p,i)=>{const w=Math.min(100,p.taps/max*100);
+    return `<div class="bar"><div class="top"><span>${esc(p.name)}${p.me?' (you)':''}</span><span>${p.taps}</span></div><div class="track"><div class="fill" style="width:${w}%;background:var(${COLORS[i]})"></div><span class="mk" style="left:${w}%">${stage(p.taps)}</span></div></div>`}).join('');
+  const s=$('#status');
+  if(st.phase==='lobby')s.textContent=L.length<2?'Waiting for rangers to join…':'Ready to plant!';
+  if(st.phase==='count')s.textContent='Get ready… '+Math.ceil(st.left/1000);
+  if(st.phase==='play')s.textContent='PLANT! ⏱ '+(st.left/1000).toFixed(1)+'s';
+  if(st.phase==='done'){const top=Math.max(...L.map(p=>p.taps)),w=L.filter(p=>p.taps===top);
+    s.textContent=(w.length>1?'🤝 Tie: ':'🏆 ')+w.map(p=>p.name).join(' & ')+' — '+top+' trees!';
+    $('#fact').textContent='🌍 '+FACTS[st.round%FACTS.length];}
+  else $('#fact').textContent='';
+  $('#tap').disabled=st.phase!=='play';
+  $('#start').disabled=!(L.length>=2&&(st.phase==='lobby'||st.phase==='done'));
+  $('#start').textContent=st.phase==='done'?'Play again':'Start game';
+  $('#hostCtl').classList.toggle('hide',!isHost);
+  $('#hint').textContent=isHost?'You are the host: keep this tab open. Share the code or invite link (max 4 players).':'Waiting for the host to start each round.';
+}
+function enter(){$('#home').classList.add('hide');$('#game').classList.remove('hide');$('#roomLbl').textContent=room;render();}
+const msg=t=>$('#msg').textContent=t;
+const getName=()=>{myName=$('#nm').value.trim();if(!myName){msg('Enter a ranger name first.');return false}return true};
+
+function create(attempt=0){
+  room=Array.from({length:4},()=>'ABCDEFGHJKLMNPQRSTUVWXYZ'[Math.random()*24|0]).join('');
+  peer=new Peer(PRE+room);
+  peer.on('open',id=>{isHost=true;myId=id;H.players=[{id,name:myName,taps:0}];peer.on('connection',hostConnection);enter();bcast();});
+  peer.on('error',e=>{if(e.type==='unavailable-id'&&attempt<5)create(attempt+1);else msg('Could not create room: '+e.type);});
+}
+function join(code){
+  room=code.toUpperCase();peer=new Peer();
+  peer.on('open',id=>{
+    myId=id;hostConn=peer.connect(PRE+room,{reliable:true});
+    const to=setTimeout(()=>{msg('Room not found. Check the code.');peer.destroy();},8000);
+    hostConn.on('open',()=>{clearTimeout(to);hostConn.send({t:'hello',name:myName});enter();});
+    hostConn.on('data',m=>{if(m.t==='state')applyState(m);if(m.t==='full'){msg('Room is full or already playing.');$('#home').classList.remove('hide');$('#game').classList.add('hide');}});
+    hostConn.on('close',()=>{$('#status').textContent='Host left the room.';$('#tap').disabled=true;$('#start').disabled=true;});
+  });
+  peer.on('error',e=>msg(e.type==='peer-unavailable'?'Room not found. Check the code.':'Connection error: '+e.type));
+}
+
+$('#create').onclick=()=>{if(getName()){msg('Creating room…');create();}};
+$('#join').onclick=()=>{const c=$('#code').value.trim();if(getName()&&c.length===4){msg('Joining…');join(c);}else if(c.length!==4)msg('Codes have 4 letters.');};
+$('#start').onclick=hostStart;
+$('#mute').onclick=()=>{muted=!muted;$('#mute').textContent=muted?'🔇':'🔊';};
+$('#copy').onclick=()=>{const u=location.href.split('?')[0]+'?room='+room;navigator.clipboard?.writeText(u);$('#copy').textContent='Copied!';setTimeout(()=>$('#copy').textContent='Copy invite link',1500);};
+$('#tap').addEventListener('pointerdown',e=>{e.preventDefault();tap();});
+addEventListener('keydown',e=>{if(e.code==='Space'&&!/INPUT|SELECT/.test(document.activeElement.tagName)){e.preventDefault();if(!e.repeat)tap();}});
+addEventListener('keyup',e=>{if(e.code==='Space')e.preventDefault();});
+const q=new URLSearchParams(location.search).get('room');if(q)$('#code').value=q.slice(0,4);
+</script></body></html>
