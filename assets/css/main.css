@@ -1,5 +1,3 @@
-@import url(fontawesome-all.min.css);
-@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600';
 
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
@@ -3281,14 +3279,14 @@ input, select, textarea {
 			}
 
 			#header.alt > * {
-				-moz-transition: opacity 3s ease;
-				-webkit-transition: opacity 3s ease;
-				-ms-transition: opacity 3s ease;
-				transition: opacity 3s ease;
-				-moz-transition-delay: 0.5s;
-				-webkit-transition-delay: 0.5s;
-				-ms-transition-delay: 0.5s;
-				transition-delay: 0.5s;
+				-moz-transition: opacity 0.8s ease;
+				-webkit-transition: opacity 0.8s ease;
+				-ms-transition: opacity 0.8s ease;
+				transition: opacity 0.8s ease;
+				-moz-transition-delay: 0s;
+				-webkit-transition-delay: 0s;
+				-ms-transition-delay: 0s;
+				transition-delay: 0s;
 				opacity: 1;
 			}
 
@@ -4041,5 +4039,30 @@ input, select, textarea {
 
 	.custom-icon::before {
 		font-size: 3.5rem;
+	}
+}
+
+
+/* Featured story heading (was an <h1>; one <h1> per page) */
+#most-visited .spotlight header.major h3 {
+	font-size: 2.5em;
+	line-height: 1.2;
+}
+
+@media screen and (max-width: 736px) {
+	#most-visited .spotlight header.major h3 {
+		font-size: 2em;
+	}
+}
+
+/* Respect the visitor's "reduce motion" setting */
+@media (prefers-reduced-motion: reduce) {
+	body {
+		animation: none;
+	}
+
+	#header.alt > *,
+	#header.alt .logo {
+		transition: none;
 	}
 }

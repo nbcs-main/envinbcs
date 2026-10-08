@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 	<head>
 		<link rel="icon" href="favicon.ico">
 		<title>Projects | NBCS</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="canonical" href="https://nbcs-envi.com/projects.html" />
 		<meta name="description" content="Explore selected NBCS projects across environmental assessment, water resources, engineering, compliance, monitoring, and stakeholder support services in the Philippines." />
 		<meta name="robots" content="index, follow" />
 
@@ -13,6 +14,10 @@
 		<meta property="og:description" content="Selected environmental, engineering, compliance, water resource, and monitoring projects supported by N. Aguirre Business Consultancy Services." />
 		<meta property="og:image" content="images/logo.svg" />
 
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600&display=swap" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
@@ -347,7 +352,7 @@
 					excerpt: "Environmental Compliance Certificate amendment including site review, baseline testing, documentation support, and coordination for project compliance requirements.",
 					tags: ["Assessment", "Permitting", "Monitoring"],
 					image: "images/blue-horizon.jpg",
-					url: "generic.html"
+					url: ""
 				},
 				{
 					title: "Groundwater and Water Resource Evaluation for Project Planning",
@@ -357,7 +362,7 @@
 					excerpt: "Water resource engagement involving groundwater review, sampling support, monitoring considerations, and practical recommendations for project water supply planning.",
 					tags: ["Groundwater", "Sampling", "Water Supply"],
 					image: "images/groundwater-supply.jpg",
-					url: "generic.html"
+					url: ""
 				},
 				{
 					title: "Wastewater and Solid Waste Technical Support for Facility Operations",
@@ -367,7 +372,7 @@
 					excerpt: "Engineering support project involving wastewater or solid waste characterization, treatment or facility planning, and implementation coordination.",
 					tags: ["Wastewater", "Solid Waste", "Engineering"],
 					image: "images/hazardous-markus.jpg",
-					url: "generic.html"
+					url: ""
 				}
 			];
 
@@ -394,9 +399,9 @@
 
 				grid.innerHTML = filteredProjects.map(project => `
 					<article class="project-card">
-						<a href="${project.url}" class="project-card-image" aria-label="Open ${project.title}">
+						${project.url ? `<a href="${project.url}" class="project-card-image" aria-label="Open ${project.title}">` : `<div class="project-card-image">`}
 							<img src="${project.image}" alt="${project.title}" />
-						</a>
+						${project.url ? `</a>` : `</div>`}
 
 						<div class="project-card-content">
 							<div class="project-meta">
@@ -405,7 +410,7 @@
 								<span> · ${project.location}</span>
 							</div>
 
-							<h3><a href="${project.url}">${project.title}</a></h3>
+							<h3>${project.url ? `<a href="${project.url}">${project.title}</a>` : project.title}</h3>
 							<p>${project.excerpt}</p>
 
 							<div class="project-tags">

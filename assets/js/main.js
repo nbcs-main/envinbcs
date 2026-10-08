@@ -8,7 +8,8 @@
 
 	var	$window = $(window),
 		$body = $('body'),
-		$main = $('#main');
+		$main = $('#main'),
+		scrollSpeed = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 0 : 1000;
 
 	// Breakpoints.
 		breakpoints({
@@ -21,7 +22,7 @@
 		});
 
 	// Play initial animations on page load.
-		$window.on('load', function() {
+		$(function() {
 			window.setTimeout(function() {
 				$body.removeClass('is-preload');
 			}, 100);
@@ -49,7 +50,7 @@
 
 				$nav_a
 					.scrolly({
-						speed: 1000,
+						speed: scrollSpeed,
 						offset: function() { return $nav.height(); }
 					})
 					.on('click', function() {
@@ -117,7 +118,7 @@
 
 	// Scrolly.
 		$('.scrolly').scrolly({
-			speed: 1000
+			speed: scrollSpeed
 		});
 
 })(jQuery);
