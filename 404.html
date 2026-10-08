@@ -1,31 +1,91 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Page not found | NBCS</title>
 		<meta charset="utf-8" />
+		<title>Page not found | NBCS</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="robots" content="noindex" />
+		<meta name="theme-color" content="#14264f" />
 		<link rel="icon" href="/favicon.ico" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css" />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600&display=swap" />
-		<link rel="stylesheet" href="/assets/css/main.css" />
+		<script>document.documentElement.className = "js";</script>
+		<link rel="stylesheet" href="/assets/css/site.css" />
 	</head>
 	<body>
-		<div id="wrapper">
-			<header id="header">
+		<a class="skip-link" href="#main">Skip to content</a>
+
+		<header class="site-header">
+			<div class="container header-inner">
+				<a class="brand" href="/index.html" aria-label="NBCS, home">
+					<img src="/images/logo.svg" alt="" width="44" height="44" />
+					<span class="brand-text"><strong>NBCS</strong><span>N. Aguirre Business Consultancy Services</span></span>
+				</a>
+				<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+					<span class="sr-only">Menu</span><span class="nav-toggle-bars" aria-hidden="true"></span>
+				</button>
+				<nav id="site-nav" class="site-nav" aria-label="Main" data-open="false">
+					<ul>
+						<li><a href="/services.html">Services</a></li>
+						<li><a href="/projects.html">Projects</a></li>
+						<li><a href="/stories/all-stories.html">Stories</a></li>
+						<li><a href="/about.html">About</a></li>
+						<li><a href="/review.html">Reviews</a></li>
+						<li><a class="btn btn-primary btn-sm" href="/contact-form.html">Get started</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<main id="main">
+			<section class="page-hero"><div class="container">
 				<h1>Page not found</h1>
 				<p>The page you were looking for may have moved or no longer exists.</p>
-			</header>
-			<div id="main">
-				<section class="main special">
-					<ul class="actions special">
-						<li><a href="/" class="button primary" style="background-color: #2B4C99">Back to home</a></li>
-						<li><a href="/stories/all-stories.html" class="button primary" style="background-color: #2B4C99">Read our stories</a></li>
+			</div></section>
+			<section class="section"><div class="container">
+				<div class="btn-row">
+					<a class="btn btn-primary" href="/">Back to home</a>
+					<a class="btn btn-outline" href="/stories/all-stories.html">Read our stories</a>
+					<a class="btn btn-outline" href="/contact-form.html">Contact us</a>
+				</div>
+			</div></section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="container footer-grid">
+				<div>
+					<h2>N. Aguirre Business Consultancy Services</h2>
+					<p>Service, excellence and integrity in the pursuit of sustainability. That is what holds us together here at NBCS.</p>
+				</div>
+				<div>
+					<h2>Contact us</h2>
+					<address>
+						<span>Door 1, Milco Malcolm Building #69, Gonzaga Street, Brgy. 26, Bacolod City, Negros Occidental, Philippines</span>
+						<span><a href="tel:+639322910691">(+63) 932-291-0691</a> / <a href="tel:+639387225645">(+63) 938-722-5645</a></span>
+						<span><a href="mailto:neaguirre@yahoo.com">neaguirre@yahoo.com</a></span>
+					</address>
+				</div>
+				<div>
+					<h2>Explore</h2>
+					<ul>
+						<li><a href="/services.html">Services</a></li>
+						<li><a href="/projects.html">Projects</a></li>
+						<li><a href="/stories/all-stories.html">Stories</a></li>
+						<li><a href="/about.html">About</a></li>
+						<li><a href="/review.html">Reviews</a></li>
 					</ul>
-				</section>
+				</div>
+				<div>
+					<h2>Follow</h2>
+					<ul>
+						<li><a href="https://www.facebook.com/profile.php?id=61583989294929" rel="noopener noreferrer">Facebook</a></li>
+						<li><a href="https://www.linkedin.com/company/n-aguirre-business-consultancy-services/" rel="noopener noreferrer">LinkedIn</a></li>
+					</ul>
+				</div>
 			</div>
-		</div>
+			<div class="container footer-legal">
+				<p>&copy; <span id="year">2026</span> N. Aguirre Business Consultancy Services. All rights reserved.</p>
+			</div>
+		</footer>
+
+		<script src="/assets/js/site.js" defer></script>
 	</body>
 </html>

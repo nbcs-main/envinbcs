@@ -55,10 +55,31 @@ for p in pages:
                 t2 = BeautifulSoup(open(target, encoding="utf-8", errors="replace").read(), "html.parser")
                 if not t2.find(id=frag): err(p, f"anchor {v} not found in {target}")
 
+# --- consistency: one shared header/footer on every page; stories and pages listed where they should be ---
+def block(src, tag, cls):
+    m = re.search(r"<%s class=\"%s\">.*?</%s>" % (tag, cls, tag), src, re.S)
+    if not m: return None
+    t = re.sub(r'(href|src)="(?:\.\./|/)', r'\1="', m.group(0))   # ignore relative-path prefix
+    return re.sub(r'\s+', ' ', t.replace(' aria-current="page"', '')).strip()
+ref_src = open("index.html", encoding="utf-8").read()
+ref_h, ref_f = block(ref_src, "header", "site-header"), block(ref_src, "footer", "site-footer")
+for p in pages:
+    src = open(p, encoding="utf-8", errors="replace").read()
+    if p.startswith("games/") or "http-equiv=\"refresh\"" in src: continue
+    if block(src, "header", "site-header") != ref_h: err(p, "site header differs from index.html (edit all pages together)")
+    if block(src, "footer", "site-footer") != ref_f: err(p, "site footer differs from index.html (edit all pages together)")
+listing = open("stories/all-stories.html", encoding="utf-8").read() if os.path.exists("stories/all-stories.html") else ""
+for p in pages:
+    if p.startswith("stories/") and not p.endswith("all-stories.html"):
+        if os.path.basename(p) not in listing: err(p, "story is not listed in stories/all-stories.html")
+        if p not in in_sitemap: err(p, "story is not in sitemap.xml")
+for p in ("index.html", "about.html", "services.html", "projects.html", "contact-form.html", "review.html", "stories/all-stories.html"):
+    if p not in in_sitemap and (p != "index.html"): err("sitemap.xml", f"missing {p}")
+
 for u in sorted(in_sitemap):
     if not os.path.exists(u): err("sitemap.xml", f"lists {u} but the file does not exist")
 
-for css in sorted(f for f in os.listdir("assets/css") if f.endswith(".css") and f not in ("fontawesome-all.min.css",)):
+for css in sorted(f for f in os.listdir("assets/css") if f.endswith(".css") and True):
     cpath = os.path.join("assets/css", css)
     for u in re.findall(r"url\(['\"]?([^)'\"]+)['\"]?\)", open(cpath, encoding="utf-8", errors="replace").read()):
         if u.startswith(("data:", "http", "#")): continue

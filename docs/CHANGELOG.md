@@ -1,13 +1,15 @@
 # Changelog
 
-## Step 1: rebrand, home page (in progress)
+## Step 1: rebrand (complete)
 
-- New design system in `assets/css/site.css` (colour/font tokens at the top; plain CSS, no framework, no jQuery). Fonts: Manrope (headings) + Inter (body), self-hosted. The two font files must be added, see `assets/fonts/README.md`; until then the site falls back to system fonts.
-- New static `index.html` using only `site.css` and `assets/js/site.js`. Services, projects, partners and the three latest stories are real HTML, so crawlers and visitors without JavaScript see them. The footer is inline on this page.
-- Responsive hero and card images generated from the original photos (`*-800.jpg`, `compliance-tomfisk-1440.jpg`).
-- Open Graph / Twitter tags added to the home page.
-- The other pages still use the legacy `main.css` + `includes/footer.html` until they are converted. Do not merge to `main` until all pages are converted, or the site will look inconsistent between pages.
-- `scripts/check_site.py` now also verifies files referenced from CSS `url()`.
+- New design on every page: `assets/css/site.css` (colour and font tokens at the top), fonts Manrope + Inter (self-hosted; add the two files per `assets/fonts/README.md`, until then system fonts are used). No jQuery, no Font Awesome, no Stellar template code.
+- All pages converted: home, About, Services, Projects, Stories (index + 3 articles), Reviews, Contact, 404. Content, JSON-LD, analytics, the Google Form, and the Firestore review flow are unchanged.
+- Project and story lists are real HTML cards (visible to search engines and without JavaScript); `assets/js/filter-cards.js` only provides search and filters.
+- The home page no longer embeds the hotlinked Okinawa drone video.
+- Responsive card and hero images generated from the original photos.
+- Navigation and footer are identical on every page and the checker enforces this; it also enforces that every story is listed in the story index and the sitemap.
+- Removed: `main.css`, `noscript.css`, `review.css`, jQuery and plugins, Font Awesome and its fonts, `includes/footer.html`, `util.js`, `breakpoints`, `browser`, `main.js`.
+- `sitemap.xml` now includes the reviews page.
 
 ## Step 0: cleanup (no design change)
 
